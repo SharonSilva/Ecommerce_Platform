@@ -50,4 +50,19 @@ public class ProductsController : ControllerBase
     return Ok(new PagedResult<ProductDto>(items, page, pageSize, totalCount));
 
     }
+
+    [HttpGet("{slug}")]
+    public async Task<ActionResult<ProductDto>> GetProduct(string slug)
+    {
+        var product = await _db.Products
+            .Where(p => p.IsActive && p.Slug == slug)
+            .Select(p => new ProductDto(p.Id, p.Name, p.Slug, p.Description, p.Price,
+            p.StockQuantity, p.ImageUrl, p.Category.Name))
+            .FirstOrDefaultAsync();
+
+        if(product is null)
+            return NotFound();
+
+        return Ok(product);
+    }
 }
