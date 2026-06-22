@@ -17,21 +17,37 @@ public class ProductsController : ControllerBase
 
     //GET /api/products
      [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+    public async Task<ActionResult<PagedResult<ProductDto>>> GetProducts(
+        [FromQuery] string? category = null,
+        [FromQuery] string? search = null,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 12)
     {
-        var products = await _db.Products
-            .Where(p => p.IsActive)
+
+        page = Math.Max(page,1);
+        pageSize = Math.Clamp(pageSize, 1, 50);
+        
+        //start with a base query , nothing has executed yet 
+        var query = _db.Products.Where(p => p.IsActive);
+
+        if (!string.IsNullOrWhiteSpace(category))
+            query = query.Where(p => p.Category.Slug ==category);
+        
+        if(!string.IsNullOrWhiteSpace(search))
+            query = query.Where(p => EF.Functions.ILike(p.Name , $"%{search}%"));
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
             .OrderBy(p => p.Name)
+            .Skip((page-1) * pageSize)
+            .Take(pageSize)
             .Select(p => new ProductDto(
-                p.Id,
-                p.Name,
-                p.Slug,
-                p.Description,
-                p.Price,
-                p.StockQuantity,
-                p.ImageUrl,
-                p.Category.Name))
-            .ToListAsync();
-        return Ok(products);
+            p.Id, p.Name, p.Slug, p.Description,
+            p.Price, p.StockQuantity, p.ImageUrl, p.Category.Name))
+        .ToListAsync();
+
+    return Ok(new PagedResult<ProductDto>(items, page, pageSize, totalCount));
+
     }
 }
