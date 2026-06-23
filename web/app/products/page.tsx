@@ -1,5 +1,7 @@
-import { getProducts } from "@/lib/api";
+import { getProducts, getCategories } from "@/lib/api";
 import Image from "next/image";
+import Link from "next/link";
+import CatalogFilters from "@/components/CatalogFilters";
 
 export default async function ProductsPage({
     searchParams,
@@ -7,7 +9,11 @@ export default async function ProductsPage({
     searchParams: Promise<{category?: string; search?: string}>;
 }) {
     const {category, search} = await searchParams;
-    const result = await getProducts({category,search});
+    const [result, categories] = await Promise.all([
+        getProducts({category, search}),
+        getCategories(),
+    ]);
+
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -17,8 +23,11 @@ export default async function ProductsPage({
         </h1>
         <p className="mt-2 text-sm text-gray-500">{result.totalCount} items</p>
 
+        <CatalogFilters categories={categories}/>
+
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {result.items.map((product) => (
+            <Link key={product.id} href={`/products/${product.slug}`}>
             <article
               key={product.id}
               className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
@@ -54,6 +63,7 @@ export default async function ProductsPage({
                 ${product.price.toFixed(2)}
               </p>
             </article>
+        </Link>
           ))}
         </div>
       </div>

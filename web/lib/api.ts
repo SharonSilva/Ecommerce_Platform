@@ -34,11 +34,23 @@ export async function getProducts(
 
 }
 
-export async function getCategores(): Promise<category[]>{
+export async function getCategories(): Promise<category[]>{
     if(!API_URL) throw new Error("API_URL is not set - check web/.env.local");
 
     const res = await fetch(`${API_URL}/api/categories`, {cache: "no-store"});
     if(!res.ok) throw new Error(`Failed to fetch categories : ${res.status}`);
 
     return (await res.json()) as category[];
+}
+
+export async function getProduct(slug: string) : Promise<Product | null>{
+    if(!API_URL) throw new Error("API_URL is not set - check web/.env.local");
+    const res = await fetch(`${API_URL}/api/products/${slug}`,{
+        cache: "no-store",
+    });
+
+    if(res.status === 404) return null;
+    if(!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
+
+    return (await res.json()) as Product;
 }
