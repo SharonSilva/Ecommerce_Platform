@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Ecommerce.Api.Data;
 using Scalar.AspNetCore;
-
+using Ecommerce.Api.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options => 
             options.UseNpgsql(builder.Configuration.GetConnectionString("Default"))
             .UseSnakeCaseNamingConvention());
+builder.Services
+    .AddIdentityCore<ApplicationUser>(options =>
+    {
+        options.Password.RequiredLength = 8;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
