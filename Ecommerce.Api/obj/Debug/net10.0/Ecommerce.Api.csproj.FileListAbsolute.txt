@@ -124,3 +124,11 @@
 /Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/EFCore.NamingConventions.dll
 /Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Scalar.AspNetCore.dll
 /Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
+/Users/andreasharonsilva/Desktop/Ecommerce_Platform/Ecommerce.Api/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll
