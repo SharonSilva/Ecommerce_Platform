@@ -15,7 +15,9 @@ export default async function Navbar(){
                 <div className="flex items-center gap-4 text-sm">
                     {user ? (
                         <>
-                        <span className="text-gray-600">{user.email}</span>
+                        <Link href="/account" className="text-gray-600 hover:text-gray-900">
+                            {user.email}
+                        </Link>
                         <LogoutButton/>
                         </>
                     ) : (
