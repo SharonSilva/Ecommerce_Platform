@@ -10,7 +10,7 @@ export default async function Navbar(){
 
     return (
         <header className="border-b border-gray-200 bg-white">
-            <nav className="mx-auto max-w-6x1 items-center justify-between px-6 py-4">
+            <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
                 <Link href="/products" className="text-lg font-bold text-gray-900">
                 My Store
                 </Link>
@@ -18,6 +18,15 @@ export default async function Navbar(){
                 <div className="flex items-center gap-4 text-sm">
                     {user ? (
                         <>
+                        <Link href="/cart" className="relative text-gray-600 hover:text-gray-900">
+                            Cart
+                            {cart && cart.itemCount > 0 && (
+                                <span className="ml-1 rounded-full bg-gray-900 px-2 py-0.5 text-xs text-white">
+                                    {cart.itemCount}
+                                </span>
+                            )}
+                        </Link>
+
                         <Link href="/account" className="text-gray-600 hover:text-gray-900">
                             {user.email}
                         </Link>
@@ -33,14 +42,6 @@ export default async function Navbar(){
                           className="rounded-lg bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800"
                         >
                           Create Account
-                        </Link>
-                        <Link href="/cart" className="relative text-gray-600 hover:text-gray-900">
-                            Cart
-                            {cart && cart.itemCount > 0 && (
-                                <span className="ml-1 rounded-full bg-gray-900 px-2 py-0.5 text-xs text-white">
-                                    {cart.itemCount}
-                                </span>
-                            )}
                         </Link>
                         </>
                     )}

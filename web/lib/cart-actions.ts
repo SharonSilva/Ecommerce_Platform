@@ -9,6 +9,8 @@ async function authedFetch(path: string, options: RequestInit = {}){
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
+    console.log("[authedFetch] token present:", !!token, "len:", token?.length);  // probe
+
     // No token -> Not logged in -> send them to sign in 
     if(!token){
         redirect("/login");
@@ -31,7 +33,10 @@ export async function addToCart(productId: number, quantity: number = 1){
         body: JSON.stringify({productId, quantity}),
     });
 
+    console.log("[addToCart] status=", res.status);
+
     if(!res.ok){
+        console.log("[addToCart] body =", await res.text());
         return {error: "Could not add to cart"};
     }
 
