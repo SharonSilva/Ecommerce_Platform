@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProduct } from "@/lib/api";
+import AddToCartButton from "@/components/add-to-cart-button";
 
 
 export async function generateMetadata({
@@ -82,10 +83,10 @@ export default async function ProductDetailPage({
                          : "Out of stock"}
                     </p>
 
-                    <button 
-                        disabled={product.stockQuantity === 0 }
-                        className="mt-8 w-full rounded-x1 bg-gray-900 px-6 py-3 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300 md:w-auto"
-                        >Add to cart</button>
+                    <AddToCartButton
+                        productId={product.id}
+                        disabled={product.stockQuantity == 0}    
+                    />
                     </div>
                 </div>
             </div>

@@ -15,6 +15,8 @@ public class AppDbContext: IdentityDbContext<ApplicationUser>
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Product> Products => Set<Product>();
 
+    public DbSet<CartItem> CartItems => Set<CartItem>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -32,5 +34,9 @@ public class AppDbContext: IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Product>()
             .Property(p=>p.CreatedAt)
             .HasDefaultValueSql("now()");
+
+        modelBuilder.Entity<CartItem>()
+            .HasIndex(ci => new {ci.UserId, ci.ProductId})        // <- ci.Product
+            .IsUnique();
     }
 }

@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import LogoutButton from "@/components/logout-button";
+import {getCart} from "@/lib/cart-actions";
 
 export default async function Navbar(){
     const user = await  getCurrentUser();
+
+    const cart = user ? await getCart() : null;
 
     return (
         <header className="border-b border-gray-200 bg-white">
@@ -30,6 +33,14 @@ export default async function Navbar(){
                           className="rounded-lg bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800"
                         >
                           Create Account
+                        </Link>
+                        <Link href="/cart" className="relative text-gray-600 hover:text-gray-900">
+                            Cart
+                            {cart && cart.itemCount > 0 && (
+                                <span className="ml-1 rounded-full bg-gray-900 px-2 py-0.5 text-xs text-white">
+                                    {cart.itemCount}
+                                </span>
+                            )}
                         </Link>
                         </>
                     )}
